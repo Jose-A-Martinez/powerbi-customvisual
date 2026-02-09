@@ -1,0 +1,65 @@
+Indice	Panels	Grupo/Tab	Cards	Configuración
+1	Fields	Categorías		
+2	Fields	Valores		
+3	Fields	Tooltips		
+4	Fields	Obtener detalle	Entre varios informes	
+5	Fields	Obtener detalle	Mantener todos los filtros	
+6	Fields	Agregue los campos de obtención de detalles aquí.		
+7	Format	Objeto visual	Cuadrícula	Ajuste automático
+8	Format	Objeto visual	Cuadrícula	Limitar tarjetas
+9	Format	Objeto visual	Cuadrícula	Máximo de tarjetas (0 = sin límite)
+10	Format	Objeto visual	Cuadrícula	Título para Resto
+11	Format	Objeto visual	Cuadrícula	Ancho mínimo
+12	Format	Objeto visual	Cuadrícula	Alto mínimo
+13	Format	Objeto visual	Cuadrícula	Separación
+14	Format	Objeto visual	Cuadrícula	Margen interno
+15	Format	Objeto visual	Tarjeta	Alineación vertical
+16	Format	Objeto visual	Tarjeta	Color del borde
+17	Format	Objeto visual	Tarjeta	Ancho del borde
+18	Format	Objeto visual	Tarjeta	Radio del borde
+19	Format	Objeto visual	Tarjeta	Fondo
+20	Format	Objeto visual	Título	Mostrar título
+21	Format	Objeto visual	Título	Fuente
+22	Format	Objeto visual	Título	Color del título
+23	Format	Objeto visual	Título	Fondo del título
+24	Format	Objeto visual	Título	Alineación horizontal
+25	Format	Objeto visual	Título	Transformación
+26	Format	Objeto visual	Título	Espaciado letras
+27	Format	Objeto visual	Título	Interlineado título
+28	Format	Objeto visual	Título	Padding horizontal del título
+29	Format	Objeto visual	Título	Padding vertical del título
+30	Format	Objeto visual	Etiquetas	Color de etiqueta
+31	Format	Objeto visual	Etiquetas	Fuente etiqueta
+32	Format	Objeto visual	Etiquetas	Alineación etiqueta
+33	Format	Objeto visual	Etiquetas	Transformación etiqueta
+34	Format	Objeto visual	Etiquetas	Espaciado letras etiqueta
+35	Format	Objeto visual	Etiquetas	Interlineado etiqueta
+36	Format	Objeto visual	Etiquetas	Color de valor
+37	Format	Objeto visual	Etiquetas	Fuente valor
+38	Format	Objeto visual	Etiquetas	Alineación valor
+39	Format	Objeto visual	Etiquetas	Transformación valor
+40	Format	Objeto visual	Etiquetas	Espaciado letras valor
+41	Format	Objeto visual	Etiquetas	Interlineado valor
+42	Format	Objeto visual	Etiquetas	Sobrescribir formato numérico
+43	Format	Objeto visual	Etiquetas	Unidades
+44	Format	Objeto visual	Etiquetas	Decimales
+45	Format	Objeto visual	Etiquetas	Mostrar blanco como
+46	Format	Objeto visual	Etiquetas	Separación etiqueta-valor
+47	Format	Objeto visual	Etiquetas	Etiquetas personalizadas
+48	Format	Objeto visual	Tooltip	Mostrar categoría
+49	Format	Objeto visual	Tooltip	Mostrar valores
+50	Format	Objeto visual	Tooltip	Mostrar campos extra
+51	Format	Objeto visual	Tooltip	Mostrar detalle de Resto
+52	Format	Objeto visual	Comportamiento	Habilitar selección
+53	Format	Objeto visual	Comportamiento	Habilitar tooltip
+54	Format	Objeto visual	Comportamiento	Color por +/-
+55	Format	Objeto visual	Comportamiento	Color positivo
+56	Format	Objeto visual	Comportamiento	Color negativo
+57	Format	Objeto visual	Comportamiento	Ordenar por valor # (1..n)
+58	Format	Objeto visual	Comportamiento	Orden descendente
+59	Format	General		Título
+60	Format	General		Subtítulo
+61	Format	General		Alineación del título
+62	Format	General		Fondo
+63	Format	General		Borde
+64	Analytics	Agregar más análisis		

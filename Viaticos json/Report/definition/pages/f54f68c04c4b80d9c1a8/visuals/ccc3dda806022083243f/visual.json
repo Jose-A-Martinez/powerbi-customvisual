@@ -1,0 +1,155 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "ccc3dda806022083243f",
+  "position": {
+    "x": 67.777777777777771,
+    "y": 331.11111111111109,
+    "z": 8000,
+    "height": 204.44444444444443,
+    "width": 1073.3333333333333,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "customvisualcardmultiple4BBBF3104CE8491F92E345857B4B8412",
+    "query": {
+      "queryState": {
+        "category": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Informe"
+                    }
+                  },
+                  "Property": "Cuenta Destino Agrupada Gral"
+                }
+              },
+              "queryRef": "Informe.Cuenta Destino Agrupada Gral",
+              "nativeQueryRef": "Cuenta Destino Agrupada Gral"
+            }
+          ]
+        },
+        "measure": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "PPTO"
+                }
+              },
+              "queryRef": "Medidas.PPTO",
+              "nativeQueryRef": "PPTO"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Desvío $"
+                }
+              },
+              "queryRef": "Medidas.Desvío $",
+              "nativeQueryRef": "Desvío $"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Desvio %"
+                }
+              },
+              "queryRef": "Medidas.Desvio %",
+              "nativeQueryRef": "Desvio %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "REG"
+                }
+              },
+              "queryRef": "Medidas.REG",
+              "nativeQueryRef": "REG"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "PPTO"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "color": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "ThemeDataColor": {
+                      "ColorId": 0,
+                      "Percent": 0
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

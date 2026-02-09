@@ -1,0 +1,17 @@
+{
+		"version": "1.0.0.8",
+		"author": {"name":"Usuario","email":"usuario@example.com"},
+		"resources": [
+			{
+				"resourceId": "rId0",
+				"sourceType": 5,
+				"file": "resources/customvisualtarjetamultiple9A2F8D7C6B5E4A3D1F0E9C8B7A6D5E4F.pbiviz.json"
+			}
+		],
+		"visual": {"name":"customvisualtarjetamultiple","displayName":"Tarjeta Multiple","guid":"customvisualtarjetamultiple9A2F8D7C6B5E4A3D1F0E9C8B7A6D5E4F","visualClassName":"Visual","version":"1.0.0.8","description":"Tarjetas múltiples con gráficos de banda y barra para rankings","supportUrl":"https://powerbi.microsoft.com","gitHubUrl":""},
+		"metadata": {
+			"pbivizjson": {
+				"resourceId": "rId0"
+			}
+		}
+	}

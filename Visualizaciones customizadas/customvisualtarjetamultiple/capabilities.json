@@ -1,0 +1,366 @@
+{
+    "dataRoles": [
+        {
+            "displayName": "Categorías",
+            "name": "category",
+            "kind": "Grouping"
+        },
+        {
+            "displayName": "Valores",
+            "name": "values",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Valor calculo",
+            "name": "percent",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Valor actual (Grafico)",
+            "name": "actual",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Valor objetivo (Grafico)",
+            "name": "target",
+            "kind": "Measure"
+        },
+        {
+            "displayName": "Informacion sobre herramientas",
+            "name": "tooltips",
+            "kind": "Measure"
+        }
+    ],
+    "dataViewMappings": [
+        {
+            "categorical": {
+                "categories": {
+                    "for": {
+                        "in": "category"
+                    },
+                    "dataReductionAlgorithm": {
+                        "top": {}
+                    }
+                },
+                "values": {
+                    "select": [
+                        {
+                            "for": {
+                                "in": "values"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "percent"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "actual"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "target"
+                            }
+                        },
+                        {
+                            "for": {
+                                "in": "tooltips"
+                            }
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "objects": {
+        "gridCard": {
+            "properties": {
+                "autoFit": {
+                    "type": { "bool": true }
+                },
+                "fitMode": {
+                    "type": { "text": true }
+                },
+                "minWidth": {
+                    "type": { "numeric": true }
+                },
+                "minHeight": {
+                    "type": { "numeric": true }
+                },
+                "spacing": {
+                    "type": { "numeric": true }
+                },
+                "padding": {
+                    "type": { "numeric": true }
+                },
+                "limitCards": {
+                    "type": { "bool": true }
+                },
+                "maxCards": {
+                    "type": { "numeric": true }
+                },
+                "restTitle": {
+                    "type": { "text": true }
+                }
+            }
+        },
+        "cardStyle": {
+            "properties": {
+                "showTitle": {
+                    "type": { "bool": true }
+                },
+                "showValueInTitle": {
+                    "type": { "bool": true }
+                },
+                "titleValueIndex": {
+                    "type": { "numeric": true }
+                },
+                "titleFontFamily": {
+                    "type": { "text": true }
+                },
+                "titleFontSize": {
+                    "type": { "numeric": true }
+                },
+                "titleBold": {
+                    "type": { "bool": true }
+                },
+                "titleItalic": {
+                    "type": { "bool": true }
+                },
+                "titleUnderline": {
+                    "type": { "bool": true }
+                },
+                "titleColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "titleAlign": {
+                    "type": { "text": true }
+                },
+                "titleLetterSpacing": {
+                    "type": { "numeric": true }
+                },
+                "titleLineHeight": {
+                    "type": { "numeric": true }
+                },
+                "titlePaddingHorizontal": {
+                    "type": { "numeric": true }
+                },
+                "titlePaddingVertical": {
+                    "type": { "numeric": true }
+                },
+                "titleBoxWidth": {
+                    "type": { "numeric": true }
+                },
+                "titleBoxHeight": {
+                    "type": { "numeric": true }
+                },
+                "showTitleBackground": {
+                    "type": { "bool": true }
+                },
+                "titleBackground": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "borderColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "borderWidth": {
+                    "type": { "numeric": true }
+                },
+                "borderRadius": {
+                    "type": { "numeric": true }
+                },
+                "background": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                }
+            }
+        },
+        "labelCard": {
+            "properties": {
+                "applyToKey": {
+                    "type": { "text": true }
+                },
+                "valueOverrides": {
+                    "type": { "text": true }
+                },
+                "valueLayout": {
+                    "type": { "text": true }
+                },
+                "tableColumns": {
+                    "type": { "numeric": true }
+                },
+                "tableRows": {
+                    "type": { "numeric": true }
+                },
+                "mosaicColumns": {
+                    "type": { "numeric": true }
+                },
+                "mosaicRows": {
+                    "type": { "numeric": true }
+                },
+                "mosaicGap": {
+                    "type": { "numeric": true }
+                },
+                "labelFontFamily": {
+                    "type": { "text": true }
+                },
+                "labelFontSize": {
+                    "type": { "numeric": true }
+                },
+                "labelBold": {
+                    "type": { "bool": true }
+                },
+                "labelItalic": {
+                    "type": { "bool": true }
+                },
+                "labelUnderline": {
+                    "type": { "bool": true }
+                },
+                "labelAlign": {
+                    "type": { "text": true }
+                },
+                "labelColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "valueFontFamily": {
+                    "type": { "text": true }
+                },
+                "valueFontSize": {
+                    "type": { "numeric": true }
+                },
+                "valueBold": {
+                    "type": { "bool": true }
+                },
+                "valueItalic": {
+                    "type": { "bool": true }
+                },
+                "valueUnderline": {
+                    "type": { "bool": true }
+                },
+                "valueAlign": {
+                    "type": { "text": true }
+                },
+                "valueColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "customLabels": {
+                    "type": { "text": true }
+                }
+            }
+        },
+        "tooltipCard": {
+            "properties": {
+                "showCategory": {
+                    "type": { "bool": true }
+                },
+                "showValues": {
+                    "type": { "bool": true }
+                },
+                "showExtra": {
+                    "type": { "bool": true }
+                }
+            }
+        },
+        "behaviorCard": {
+            "properties": {
+                "enableSelection": {
+                    "type": { "bool": true }
+                },
+                "enableTooltip": {
+                    "type": { "bool": true }
+                },
+                "colorBySign": {
+                    "type": { "bool": true }
+                },
+                "positiveColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "negativeColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "sortByValueIndex": {
+                    "type": { "numeric": true }
+                },
+                "sortDescending": {
+                    "type": { "bool": true }
+                }
+            }
+        },
+        "chartConfig": {
+            "properties": {
+                "showChart": {
+                    "type": { "bool": true }
+                },
+                "chartType": {
+                    "type": { "text": true }
+                },
+                "useValueIndex": {
+                    "type": { "numeric": true }
+                },
+                "chartHeight": {
+                    "type": { "numeric": true }
+                },
+                "chartWidth": {
+                    "type": { "numeric": true }
+                },
+                "chartBottomSpacing": {
+                    "type": { "numeric": true }
+                },
+                "chartColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "chartBackColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "markerColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "markerWidth": {
+                    "type": { "numeric": true }
+                },
+                "maxValue": {
+                    "type": { "numeric": true }
+                }
+            }
+        },
+        "chartValues": {
+            "properties": {
+                "showPercentage": {
+                    "type": { "bool": true }
+                },
+                "percentSource": {
+                    "type": { "text": true }
+                },
+                "percentageMode": {
+                    "type": { "text": true }
+                },
+                "percentageDecimals": {
+                    "type": { "numeric": true }
+                },
+                "percentLabelColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "percentLabelSize": {
+                    "type": { "numeric": true }
+                },
+                "percentLabelPosition": {
+                    "type": { "text": true }
+                },
+                "showActualLabel": {
+                    "type": { "bool": true }
+                },
+                "showTargetLabel": {
+                    "type": { "bool": true }
+                }
+            }
+        }
+    },
+    "sorting": {
+        "default": {}
+    },
+    "drilldown": {
+        "roles": ["category"]
+    },
+    "privileges": []
+}

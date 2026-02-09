@@ -1,0 +1,369 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "3df06ff3d47ee0eac750",
+  "position": {
+    "x": 0,
+    "y": 108.69622906881087,
+    "z": 8000,
+    "height": 91.304832417801123,
+    "width": 1278.2676538492158,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "linearGauge8C105C35DD8E4826903041C089AF454F",
+    "query": {
+      "queryState": {
+        "actualValue": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "REG"
+                }
+              },
+              "queryRef": "Medidas.REG",
+              "nativeQueryRef": "REG"
+            }
+          ]
+        },
+        "targetValue": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "PPTO"
+                }
+              },
+              "queryRef": "Medidas.PPTO",
+              "nativeQueryRef": "PPTO"
+            }
+          ]
+        },
+        "tooltip": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Desvío $"
+                }
+              },
+              "queryRef": "Medidas.Desvío $",
+              "nativeQueryRef": "Desvío $"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Desvio %"
+                }
+              },
+              "queryRef": "Medidas.Desvio %",
+              "nativeQueryRef": "Desvio %"
+            }
+          ]
+        },
+        "showChart": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Medidas"
+                    }
+                  },
+                  "Property": "Desvio %"
+                }
+              },
+              "queryRef": "Medidas.Desvio %",
+              "nativeQueryRef": "Desvio %"
+            }
+          ]
+        },
+        "smallMultiple": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Informe"
+                    }
+                  },
+                  "Property": "Cuenta Destino Agrupada Gral"
+                }
+              },
+              "queryRef": "Informe.Cuenta Destino Agrupada Gral",
+              "nativeQueryRef": "Cuenta Destino Agrupada Gral",
+              "active": true
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "Medidas"
+                  }
+                },
+                "Property": "REG"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "objects": {
+      "config": [
+        {
+          "properties": {
+            "labelsOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"active\":\"target\",\"actualLabelShow\":true,\"targetLabelShow\":true,\"targetStringLabelShow\":true,\"targetStringLabelName\":\" \",\"minMaxLabelShow\":false,\"color\":\"rgba(51, 51, 51, 1)\",\"dataLabelColorType\":\"fixed\",\"targetDataLabelColorType\":\"fixed\",\"targetStringDataLabelColorType\":\"auto\",\"enableBackgroundColor\":false,\"innerBackgroundColor\":\"rgba(93,93,93,1)\",\"applyBackgroundFor\":\"patternArcs\",\"labelPlacement\":\"outside\",\"autoTextSize\":true,\"fontSize\":10,\"display\":\"value\",\"styling\":[\"bold\"],\"fontFamily\":\"\\\"Calibri\\\"\",\"targetColor\":\"rgba(51, 51, 51, 1)\",\"targetStringColor\":\"rgba(51, 51, 51, 1)\",\"minMaxColor\":\"rgba(0,0,0,1)\",\"targetEnableBackgroundColor\":false,\"targetStringEnableBackgroundColor\":false,\"targetInnerBackgroundColor\":\"rgba(220,220,220,1)\",\"targetStringInnerBackgroundColor\":\"rgba(218,216,216,1)\",\"targetApplyBackgroundFor\":\"patternArcs\",\"targetStringApplyBackgroundFor\":\"patternArcs\",\"targetLabelPlacement\":\"inside\",\"targetStringLabelPlacement\":\"outside\",\"targetAutoTextSize\":false,\"targetStringAutoTextSize\":true,\"targetFontSize\":11,\"targetStringFontSize\":10,\"targetStyling\":[],\"targetStringStyling\":[],\"targetFontFamily\":\"\\\"Calibri\\\"\",\"targetStringFontFamily\":\"\\\"Calibri\\\"\",\"minMaxAutoTextSize\":true,\"minMaxFontSize\":12,\"minMaxStyling\":[],\"minMaxFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\"}'"
+                }
+              }
+            },
+            "axisOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"isGaugeAxisEnable\":false,\"enableActualFill\":false,\"numberOfTicks\":5,\"showCustomMinMax\":true,\"customMin\":\"\",\"customMax\":900,\"scalePosition\":\"bottom\",\"verticalScalePosition\":\"right\",\"ticksFontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"ticksStyling\":[],\"valueType\":\"absolute\",\"ticksFontSize\":10,\"ticksFontColor\":\"rgb(79,79,79)\",\"axisActualColor\":\"rgb(3,77,161)\",\"show\":true,\"decimalSeparator\":\".\",\"thousandsSeparator\":\",\",\"decimalPlaces\":0,\"scaling\":\"none\",\"prefix\":\"\",\"suffix\":\"\",\"scalingLabel\":false,\"thousandScalingLabel\":\"K\",\"millionScalingLabel\":\"M\",\"billionScalingLabel\":\"B\",\"trillionScalingLabel\":\"T\"}'"
+                }
+              }
+            },
+            "chartOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"shapeType\":\"basic\",\"orientation\":\"horizontal\",\"cornerRadius\":\"rounded\",\"enableAnimation\":false,\"autoWidth\":false,\"cylinderAutoWidth\":true,\"barInBarAutoWidth\":false,\"thermometerAutoWidth\":false,\"customRadius\":0,\"show\":true,\"sameThickness\":true,\"width\":1,\"linearBarWidth\":30,\"thermometerBarWidth\":50,\"cylinderBarWidth\":100,\"sameColor\":false,\"color\":\"rgba(225,225,225,0.3)\",\"cornerRadiusValue\":50,\"enableDeviationBar\":false,\"deviationBarWidth\":50,\"deviationBarColor\":\"rgb(255, 255, 255)\",\"animationTime\":4,\"barInBarWidth\":50,\"actualBarInBarWidth\":50,\"actualMarkerType\":\"triangle\",\"enableActualMarker\":true,\"actualMarkerSize\":9,\"actualMarkerColor\":\"rgba(155, 155, 155, 1)\",\"direction\":\"left\",\"verticalDirection\":\"bottom\",\"deviationType\":\"value\",\"deviationFontSize\":14,\"deviationBarPositiveColor\":\"rgb(139, 182, 0)\",\"deviationBarNegativeColor\":\"rgb(255, 0, 0)\"}'"
+                }
+              }
+            },
+            "dataColors": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"actualFillColor\":\"rgba(205, 196, 190, 1)\",\"trackFillColor\":\"rgba(224, 218, 212, 0.84)\",\"colorScheme\":\"\",\"customizeOthersColor\":true,\"enableRemaining\":true,\"othersColor\":\"rgba(155, 155, 155, 1)\",\"fillType\":\"category\",\"cylinderfillType\":\"gradient\",\"fillMin\":\"rgb(253,98,94)\",\"isFillMid\":false,\"fillMid\":\"rgb(3,194,129)\",\"fillMax\":\"rgb(92,113,187)\",\"lowerGradientFill\":\"rgb(32, 61, 189)\",\"upperGradientFill\":\"rgb(0, 198, 251)\",\"lowerEllipseFill\":\"rgb(8, 87, 181)\",\"greaterEllipseFill\":\"rgb(106, 227, 255)\",\"lessThanTargetColor\":\"rgb(255, 0, 10)\",\"equalToTargetColor\":\"rgb(255, 127, 14)\",\"greaterThanTargetColor\":\"rgb(130, 186, 0)\"}'"
+                }
+              }
+            },
+            "bandColors": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"enableBands\":false,\"numberOfClasses\":3,\"powerbiNumberOfClass\":3,\"bandsOption\":\"byPercentage\",\"showBandName\":false,\"gradientColorCheck\":false,\"color\":\"rgb(0,0,0)\",\"autoTextSize\":true,\"fontSize\":12,\"styling\":[],\"fontFamily\":\"\\\"Segoe UI\\\", wf_segoe-ui_normal, helvetica, arial, sans-serif\",\"bandPercentageDetails\":[{\"name\":\"Band 1\",\"value\":\"33\",\"color\":\"rgba(248, 51, 31, 1)\"},{\"name\":\"Band 2\",\"value\":\"66\",\"color\":\"rgba(248, 208, 3, 1)\"},{\"name\":\"Band 3\",\"value\":\"Max\",\"color\":\"rgba(9, 163, 21, 1)\"}],\"bandNumberDetails\":[{\"name\":\"Band 1\",\"value\":230356.61713333332,\"color\":\"rgba(248, 51, 31, 1)\"},{\"name\":\"Band 2\",\"value\":460713.23426666664,\"color\":\"rgba(248, 208, 3, 1)\"},{\"name\":\"Band 3\",\"value\":\"Max\",\"color\":\"rgba(9, 163, 21, 1)\"}],\"bandFieldDetails\":[{\"name\":\"Band 1\",\"value\":\"KPI Diferencia\",\"color\":\"rgba(243, 156, 18, 1)\"}],\"fillType\":\"byPercentage\",\"schemeColors\":[\"rgb(241,238,246)\",\"rgb(189,201,225)\",\"rgb(116,169,207)\",\"rgb(43,140,190)\",\"rgb(4,90,141)\"],\"reverse\":false,\"isGradient\":false,\"colorBlindSafe\":false}'"
+                }
+              }
+            },
+            "patternOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "smallMultiplesSettings": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"isSmallMultiplesEnabled\":false,\"isShadowEnable\":false,\"hostContainerId\":\"\",\"categories\":[],\"containerWidth\":0,\"containerHeight\":0,\"layoutType\":\"grid\",\"displayType\":\"fixed\",\"viewType\":\"scroll\",\"rows\":1,\"columns\":8,\"outerSpacing\":2,\"innerSpacing\":1,\"xAxisType\":\"individual\",\"yAxisType\":\"individual\",\"xAxisPosition\":\"frozenBottomColumn\",\"yAxisPosition\":\"frozenLeftColumn\",\"header\":{\"displayType\":\"titleOnly\",\"fontFamily\":\"\\\"Calibri\\\"\",\"fontSize\":11,\"fontColor\":\"rgba(102,102,102,1)\",\"fontStyles\":[\"bold\"],\"alignment\":\"center\",\"position\":\"top\",\"isTextWrapEnabled\":false},\"enableBackground\":false,\"background\":{\"type\":\"all\",\"panelColor\":\"rgba(255, 255, 255, 1)\",\"isAlternateBackground\":false,\"alternateColor\":\"rgba(250,249,237,1)\",\"transparency\":100},\"border\":{\"isShowBorder\":true,\"style\":\"solid\",\"width\":0,\"radius\":8,\"color\":\"rgba(0, 0, 0, 1)\"},\"shadow\":{\"enable\":true,\"type\":\"shadow\",\"verticalOffset\":3,\"horizontalOffset\":3,\"blur\":7,\"spread\":0,\"color\":\"rgba(220, 220, 220, 1)\",\"inset\":false}}'"
+                }
+              }
+            },
+            "rankingOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"enable\":true,\"rank\":\"topN\",\"count\":7,\"isOthers\":true}'"
+                }
+              }
+            },
+            "sortingOptions": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "target": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"maxValueType\":\"BYFIELD\",\"customMaxValue\":100,\"fieldName\":\"ppto\",\"cylinderBorderWidth\":2,\"cylinderBorderColor\":\"rgba(0,0,0,1)\",\"cylinderBorderStyle\":\"line\",\"enableTargetMarker\":true,\"targetMarkerType\":\"line\",\"targetMarkerSize\":10,\"targetMarkerColor\":\"rgba(155, 155, 155, 1)\"}'"
+                }
+              }
+            },
+            "templates": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"selectedThemeIndex\":7,\"activeTemplateType\":\"SINGLE_CATEGORY\"}'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "footer": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "numberFormatting": [
+        {
+          "properties": {
+            "decimalPlaces": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "decimalSeparator": {
+              "expr": {
+                "Literal": {
+                  "Value": "','"
+                }
+              }
+            },
+            "thousandsSeparator": {
+              "expr": {
+                "Literal": {
+                  "Value": "'.'"
+                }
+              }
+            },
+            "scaling": {
+              "expr": {
+                "Literal": {
+                  "Value": "'thousands'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "editor": [
+        {
+          "properties": {
+            "darkMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualConfig": [
+        {
+          "properties": {
+            "gridViewToggle": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "advancedSettings": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

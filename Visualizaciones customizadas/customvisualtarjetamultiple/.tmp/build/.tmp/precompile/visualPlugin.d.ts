@@ -1,0 +1,4 @@
+import powerbiVisualsApi from "powerbi-visuals-api";
+import IVisualPlugin = powerbiVisualsApi.visuals.plugins.IVisualPlugin;
+declare var customvisualtarjetamultiple9A2F8D7C6B5E4A3D1F0E9C8B7A6D5E4F: IVisualPlugin;
+export default customvisualtarjetamultiple9A2F8D7C6B5E4A3D1F0E9C8B7A6D5E4F;

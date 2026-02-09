@@ -1,0 +1,87 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.0.0/schema.json",
+  "name": "8fc29980420209809904",
+  "displayName": "Detalle gerencia",
+  "displayOption": "ActualSize",
+  "height": 850,
+  "width": 1280,
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "37c0809b6acad2a32e59",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Informe"
+              }
+            },
+            "Property": "Gerencia agrupada"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "i",
+              "Entity": "Informe",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "i"
+                          }
+                        },
+                        "Property": "Gerencia agrupada"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Directorio'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "howCreated": "Drillthrough"
+      }
+    ]
+  },
+  "pageBinding": {
+    "name": "907fb00eb0a76a33e858",
+    "type": "Drillthrough",
+    "parameters": [
+      {
+        "name": "314037143cb66b798181",
+        "boundFilter": "37c0809b6acad2a32e59",
+        "fieldExpr": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Informe"
+              }
+            },
+            "Property": "Gerencia agrupada"
+          }
+        }
+      }
+    ],
+    "acceptsFilterContext": "None"
+  }
+}

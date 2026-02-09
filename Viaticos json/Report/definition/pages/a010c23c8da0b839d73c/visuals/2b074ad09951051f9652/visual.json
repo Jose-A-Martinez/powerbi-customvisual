@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.5.0/schema.json",
+  "name": "2b074ad09951051f9652",
+  "position": {
+    "x": 1077.1905727064106,
+    "y": 246.9991122129349,
+    "z": 2000,
+    "height": 149.5716846178328,
+    "width": 150.94390190790466,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Informe"
+                    }
+                  },
+                  "Property": "Sub Rubro Agrupado"
+                }
+              },
+              "queryRef": "Informe.Sub Rubro Agrupado",
+              "nativeQueryRef": "Sub Rubro Agrupado"
+            }
+          ]
+        }
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

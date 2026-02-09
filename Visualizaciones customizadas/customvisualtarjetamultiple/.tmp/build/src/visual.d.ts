@@ -1,0 +1,30 @@
+import powerbi from "powerbi-visuals-api";
+import "./../style/visual.less";
+import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
+import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
+import IVisual = powerbi.extensibility.visual.IVisual;
+export declare class Visual implements IVisual {
+    private target;
+    private container;
+    private formattingSettings;
+    private formattingSettingsService;
+    private host;
+    private selectionManager;
+    private selectedIds;
+    private lastApplyItems;
+    private lastApplyValue;
+    private lastApplyKey;
+    private lastOverridesJson;
+    private valueKeyByLabel;
+    private valueOverrides;
+    constructor(options: VisualConstructorOptions);
+    update(options: VisualUpdateOptions): void;
+    private renderCards;
+    private fitTitlesToWidth;
+    private applyOverrideToSettings;
+    private applySelectionStyles;
+    private createChart;
+    private createRestTooltip;
+    private formatValue;
+    getFormattingModel(): powerbi.visuals.FormattingModel;
+}
