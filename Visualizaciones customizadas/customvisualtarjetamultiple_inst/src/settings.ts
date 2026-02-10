@@ -315,19 +315,35 @@ class CardStyleSettings extends FormattingSettingsCompositeCard {
  * Etiquetas Card Settings
  */
 class LabelCardSettings extends FormattingSettingsCompositeCard {
-    allowDrag = new formattingSettings.ToggleSwitch({
-        name: "allowDrag",
-        displayName: "Facilitar arrastre visual",
-        value: false
+    // Selector de métrica y overrides deben ir antes de applyGroup
+    applyTo = new formattingSettings.ItemDropdown({
+        name: "applyToKey",
+        displayName: "Tarjetas",
+        items: [
+            { value: "all", displayName: "Todas" }
+        ],
+        value: { value: "all", displayName: "Todas" }
     });
 
-    // Permite overrides por-métrica (persistencia avanzada)
     valueOverrides = new formattingSettings.TextInput({
         name: "valueOverrides",
         displayName: "Overrides avanzados",
         value: "",
         placeholder: "JSON de overrides por métrica"
     });
+
+    applyGroup = new formattingSettings.Group({
+        name: "applyGroup",
+        displayName: "Aplicar configuración a",
+        collapsible: false,
+        slices: [this.applyTo, this.valueOverrides]
+    });
+    allowDrag = new formattingSettings.ToggleSwitch({
+        name: "allowDrag",
+        displayName: "Facilitar arrastre visual",
+        value: false
+    });
+
 
     valueDisplayUnits = new formattingSettings.ItemDropdown({
         name: "valueDisplayUnits",
@@ -354,14 +370,6 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         instanceKind: powerbi.VisualEnumerationInstanceKinds.ConstantOrRule
     });
 
-    applyTo = new formattingSettings.ItemDropdown({
-        name: "applyToKey",
-        displayName: "Tarjetas",
-        items: [
-            { value: "all", displayName: "Todas" }
-        ],
-        value: { value: "all", displayName: "Todas" }
-    });
 
     valueLayout = new formattingSettings.ItemDropdown({
         name: "valueLayout",
@@ -763,20 +771,16 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         value: "(Configuración pendiente)"
     });
 
+
     name: string = "labelCard";
     displayName: string = "Diseño de multiples tarjetas";
+
+    // Definir los grupos de formato para que aparezcan en el panel
     presentationGroup = new formattingSettings.Group({
         name: "presentationGroup",
         displayName: "Presentación",
         collapsible: true,
         slices: [this.valueLayout, this.tableColumns, this.tableRows, this.mosaicColumns, this.mosaicRows]
-    });
-
-    applyGroup = new formattingSettings.Group({
-        name: "applyGroup",
-        displayName: "Aplicar configuración a",
-        collapsible: true,
-        slices: [this.applyTo]
     });
 
     shapeGroup = new formattingSettings.Group({
@@ -875,19 +879,53 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         slices: [this.childBackgroundEnabled, this.childBackgroundColor]
     });
 
-    groups: Array<FormattingSettingsGroup> = [
+    groups: FormattingSettingsGroup[] = [
         this.applyGroup,
         this.presentationGroup,
         this.shapeGroup,
         this.spacingGroup,
-        this.labelGroup,
         this.valueGroup,
+        this.labelGroup,
         this.colorRulesGroup,
         this.imageGroup,
         this.backgroundGroup
     ];
 
+    // Nuevo enfoque: applyGroup es padre, los demás grupos van como hijos (CompositeSlice)
+    // No se puede instanciar CompositeSlice directamente, así que se omite compositeSlices
+    compositeSlices = [];
+
     onPreProcess(): void {
+        // --- Lógica de visibilidad y valores dependiente de la métrica seleccionada ---
+        const selectedKey = String(this.applyTo.value?.value || "all");
+        let overrides: any = {};
+        try {
+            overrides = this.valueOverrides.value ? JSON.parse(this.valueOverrides.value) : {};
+        } catch {
+            overrides = {};
+        }
+
+        // Si hay overrides para la métrica, aplicar a los grupos
+        const metricOverrides = overrides[selectedKey] || {};
+        // Ejemplo: valueFont, valueColor, etc. (agrega aquí los campos que quieras soportar por métrica)
+        if (metricOverrides.valueFontFamily) this.valueFont.fontFamily.value = metricOverrides.valueFontFamily;
+        if (metricOverrides.valueFontSize) this.valueFont.fontSize.value = metricOverrides.valueFontSize;
+        if (metricOverrides.valueBold !== undefined) this.valueFont.bold.value = metricOverrides.valueBold;
+        if (metricOverrides.valueItalic !== undefined) this.valueFont.italic.value = metricOverrides.valueItalic;
+        if (metricOverrides.valueUnderline !== undefined) this.valueFont.underline.value = metricOverrides.valueUnderline;
+        if (metricOverrides.valueColor) this.valueColor.value = metricOverrides.valueColor;
+        if (metricOverrides.valueAlign) this.valueAlign.value = metricOverrides.valueAlign;
+        if (metricOverrides.valueDisplayUnits) this.valueDisplayUnits.value = metricOverrides.valueDisplayUnits;
+        if (metricOverrides.valueFormatCode) this.valueFormatCode.value = metricOverrides.valueFormatCode;
+        // ...agrega más campos según lo que quieras soportar...
+
+        // Visibilidad de grupos (opcional: podrías ocultar grupos si no hay override)
+        // this.valueGroup.visible = true; // Siempre visible, pero podrías condicionar
+
+        // Guardar cambios al cambiar valores (solo si el usuario cambia algo)
+        // Esto se debe hacer en visual.ts al persistir cambios, aquí solo se leen
+
+        // --- Lógica de visibilidad estándar ---
         const layout = String(this.valueLayout.value.value || "table");
         const isTable = layout === "table";
         this.tableColumns.visible = isTable;
@@ -896,30 +934,17 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         this.mosaicRows.visible = !isTable;
         this.mosaicGap.visible = !isTable;
 
-        const showNative = !isTable;
-        this.applyGroup.visible = showNative;
-        this.shapeGroup.visible = showNative;
-        this.spacingGroup.visible = showNative;
-        this.valueGroup.visible = showNative;
-        this.labelGroup.visible = showNative;
-        this.colorRulesGroup.visible = showNative;
-        this.imageGroup.visible = showNative;
-        this.backgroundGroup.visible = showNative;
         this.valueOverrides.visible = false;
-
         this.childBackgroundColor.visible = this.childBackgroundEnabled.value;
-
         this.childFixedWidth.visible = this.childFixedWidthEnabled.value;
         this.childFixedHeight.visible = this.childFixedHeightEnabled.value;
-
         const showIndividual = this.childCornerIndividual.value;
         this.childCornerRadius.visible = !showIndividual;
         this.childCornerTopLeft.visible = showIndividual;
         this.childCornerTopRight.visible = showIndividual;
         this.childCornerBottomLeft.visible = showIndividual;
         this.childCornerBottomRight.visible = showIndividual;
-
-        const showRules = showNative && this.enableColorRules.value;
+        const showRules = !isTable && this.enableColorRules.value;
         this.rule1Title.visible = showRules;
         this.rule1Min.visible = showRules;
         this.rule1Max.visible = showRules;
@@ -938,8 +963,6 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         this.rule3LabelColor.visible = showRules;
         this.rule3ValueColor.visible = showRules;
         this.rule3BackgroundColor.visible = showRules;
-
-        // Mostrar formato solo si es personalizado
         this.valueFormatCode.visible = this.valueDisplayUnits.value.value === "custom";
     }
 }
