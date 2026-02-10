@@ -1270,7 +1270,7 @@ class ChartValuesSettings extends FormattingSettingsCard {
     });
     showPercentage = new formattingSettings.ToggleSwitch({
         name: "showPercentage",
-        displayName: "Valores graficos",
+        displayName: "Valor en barra",
         value: true,
         description: "Activa o desactiva la etiqueta de valor/porcentaje del gráfico."
     });

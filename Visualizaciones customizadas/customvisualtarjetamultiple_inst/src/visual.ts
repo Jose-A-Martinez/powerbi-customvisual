@@ -1748,9 +1748,25 @@ export class Visual implements IVisual {
                     // Posición
                     const actualPos = settings.chartValues.actualLabelPosition.value.value;
                     if (actualPos === "top") {
-                        actualLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
-                        actualLabel.style.top = "-16px";
-                        actualLabel.style.transform = "translateX(-50%)";
+                        setTimeout(() => {
+                            const box = background.getBoundingClientRect();
+                            const label = actualLabel.getBoundingClientRect();
+                            let left = (targetPercentage * box.width) - (label.width / 2);
+                            // Justificación dinámica
+                            if (left < 10) {
+                                actualLabel.style.left = `0px`;
+                                actualLabel.style.textAlign = "left";
+                            } else if (left + label.width > box.width - 10) {
+                                actualLabel.style.left = `${box.width - label.width}px`;
+                                actualLabel.style.textAlign = "right";
+                            } else {
+                                actualLabel.style.left = `${left}px`;
+                                actualLabel.style.textAlign = "center";
+                            }
+                            actualLabel.style.top = "-16px";
+                            actualLabel.style.transform = "none";
+                            actualLabel.style.whiteSpace = "nowrap";
+                        }, 0);
                     } else if (actualPos === "bottom") {
                         actualLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
                         actualLabel.style.bottom = "-16px";
@@ -1790,9 +1806,25 @@ export class Visual implements IVisual {
                     // Posición
                     const targetPos = settings.chartValues.targetLabelPosition.value.value;
                     if (targetPos === "top") {
-                        targetLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
-                        targetLabel.style.top = "-16px";
-                        targetLabel.style.transform = "translateX(-50%)";
+                        setTimeout(() => {
+                            const box = background.getBoundingClientRect();
+                            const label = targetLabel.getBoundingClientRect();
+                            let left = (targetPercentage * box.width) - (label.width / 2);
+                            // Justificación dinámica
+                            if (left < 10) {
+                                targetLabel.style.left = `0px`;
+                                targetLabel.style.textAlign = "left";
+                            } else if (left + label.width > box.width - 10) {
+                                targetLabel.style.left = `${box.width - label.width}px`;
+                                targetLabel.style.textAlign = "right";
+                            } else {
+                                targetLabel.style.left = `${left}px`;
+                                targetLabel.style.textAlign = "center";
+                            }
+                            targetLabel.style.top = "-16px";
+                            targetLabel.style.transform = "none";
+                            targetLabel.style.whiteSpace = "nowrap";
+                        }, 0);
                     } else if (targetPos === "bottom") {
                         targetLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
                         targetLabel.style.bottom = "-16px";
