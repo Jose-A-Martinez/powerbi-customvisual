@@ -332,11 +332,13 @@ export class Visual implements IVisual {
                             const valueMeta = displayValues[j].source;
                             const label = valueMeta.displayName || `Value ${j + 1}`;
                             let sum = 0;
-
                             restCards.forEach(card => {
-                                sum += card.values[j]?.rawValue || 0;
+                                let v = card.values[j]?.rawValue;
+                                if (v === undefined || v === null || isNaN(v)) v = 0;
+                                sum += v;
                             });
-
+                            // Normalizar NaN, null, undefined
+                            if (sum === undefined || sum === null || isNaN(sum)) sum = 0;
                             const formattedValue = this.formatValue(sum, valueMeta.format);
                             restCard.values.push({
                                 label: label,
@@ -347,17 +349,29 @@ export class Visual implements IVisual {
                         }
 
                         if (actualValues.length > 0) {
-                            const sumActual = restCards.reduce((acc, card) => acc + (card.chartActual || 0), 0);
+                            const sumActual = restCards.reduce((acc, card) => {
+                                let v = card.chartActual;
+                                if (v === undefined || v === null || isNaN(v)) v = 0;
+                                return acc + v;
+                            }, 0);
                             restCard.chartActual = sumActual;
                             restCard.chartActualFormatted = this.formatValue(sumActual, actualValues[0]?.source?.format);
                         }
                         if (targetValues.length > 0) {
-                            const sumTarget = restCards.reduce((acc, card) => acc + (card.chartTarget || 0), 0);
+                            const sumTarget = restCards.reduce((acc, card) => {
+                                let v = card.chartTarget;
+                                if (v === undefined || v === null || isNaN(v)) v = 0;
+                                return acc + v;
+                            }, 0);
                             restCard.chartTarget = sumTarget;
                             restCard.chartTargetFormatted = this.formatValue(sumTarget, targetValues[0]?.source?.format);
                         }
                         if (percentValues.length > 0) {
-                            const sumPercent = restCards.reduce((acc, card) => acc + (card.percentValue || 0), 0);
+                            const sumPercent = restCards.reduce((acc, card) => {
+                                let v = card.percentValue;
+                                if (v === undefined || v === null || isNaN(v)) v = 0;
+                                return acc + v;
+                            }, 0);
                             restCard.percentValue = sumPercent;
                             restCard.percentFormatted = this.formatValue(sumPercent, percentValues[0]?.source?.format);
                         }
@@ -1766,9 +1780,9 @@ export class Visual implements IVisual {
                             actualLabel.style.top = "-16px";
                             actualLabel.style.transform = "none";
                             actualLabel.style.whiteSpace = "nowrap";
-                            actualLabel.style.maxWidth = "none";
-                            actualLabel.style.overflow = "visible";
-                            actualLabel.style.textOverflow = "unset";
+                            actualLabel.style.maxWidth = `${box.width}px`;
+                            actualLabel.style.overflow = "hidden";
+                            actualLabel.style.textOverflow = "ellipsis";
                         }, 0);
                     } else if (actualPos === "bottom") {
                         actualLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
@@ -1827,9 +1841,9 @@ export class Visual implements IVisual {
                             targetLabel.style.top = "-16px";
                             targetLabel.style.transform = "none";
                             targetLabel.style.whiteSpace = "nowrap";
-                            targetLabel.style.maxWidth = "none";
-                            targetLabel.style.overflow = "visible";
-                            targetLabel.style.textOverflow = "unset";
+                            targetLabel.style.maxWidth = `${box.width}px`;
+                            targetLabel.style.overflow = "hidden";
+                            targetLabel.style.textOverflow = "ellipsis";
                         }, 0);
                     } else if (targetPos === "bottom") {
                         targetLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
