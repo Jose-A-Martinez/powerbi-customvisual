@@ -703,13 +703,6 @@ export class Visual implements IVisual {
                 }
             }
 
-
-            // Parsear los overrides avanzados (JSON)
-            let valueOverrides: Record<string, any> = {};
-            try {
-                valueOverrides = JSON.parse(settings.labelCard.valueOverrides.value || "{}") || {};
-            } catch {}
-
             cardData.values.forEach(valueData => {
                 const valueRow = document.createElement("div");
                 valueRow.className = "valueRow";
@@ -765,12 +758,6 @@ export class Visual implements IVisual {
                 const conditionalValueColor = this.getConditionalColorFromObjects(valueObjectsForPointWithColor, "valueColor");
 
                 const hasRuleObjects = Boolean(labelObjectsForPoint || valueObjectsForPointWithColor);
-
-                // Obtener el override adecuado para la métrica
-                const valueKey = this.valueKeyByLabel[valueData.label] || valueData.label;
-                const override = (valueKey && valueOverrides[valueKey])
-                    || valueOverrides[valueData.label]
-                    || valueOverrides["all"];
 
                 let rulesApplied = false;
                 if (override?.enableColorRules) {

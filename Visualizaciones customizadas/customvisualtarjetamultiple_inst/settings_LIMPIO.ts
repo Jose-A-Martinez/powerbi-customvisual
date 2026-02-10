@@ -321,14 +321,6 @@ class LabelCardSettings extends FormattingSettingsCompositeCard {
         value: false
     });
 
-    // Permite overrides por-métrica (persistencia avanzada)
-    valueOverrides = new formattingSettings.TextInput({
-        name: "valueOverrides",
-        displayName: "Overrides avanzados",
-        value: "",
-        placeholder: "JSON de overrides por métrica"
-    });
-
     valueDisplayUnits = new formattingSettings.ItemDropdown({
         name: "valueDisplayUnits",
         displayName: "Mostrar unidades",
