@@ -1766,6 +1766,9 @@ export class Visual implements IVisual {
                             actualLabel.style.top = "-16px";
                             actualLabel.style.transform = "none";
                             actualLabel.style.whiteSpace = "nowrap";
+                            actualLabel.style.maxWidth = "none";
+                            actualLabel.style.overflow = "visible";
+                            actualLabel.style.textOverflow = "unset";
                         }, 0);
                     } else if (actualPos === "bottom") {
                         actualLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
@@ -1824,6 +1827,9 @@ export class Visual implements IVisual {
                             targetLabel.style.top = "-16px";
                             targetLabel.style.transform = "none";
                             targetLabel.style.whiteSpace = "nowrap";
+                            targetLabel.style.maxWidth = "none";
+                            targetLabel.style.overflow = "visible";
+                            targetLabel.style.textOverflow = "unset";
                         }, 0);
                     } else if (targetPos === "bottom") {
                         targetLabel.style.left = `${Math.min(targetPercentage * 100, 100)}%`;
