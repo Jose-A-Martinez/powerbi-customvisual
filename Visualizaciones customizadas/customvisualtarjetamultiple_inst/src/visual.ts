@@ -327,10 +327,17 @@ export class Visual implements IVisual {
                             restDetails: restCards
                         };
 
-                        // Sum values for resto
+                        // Sum values for resto, apply per-metric override if selected
+                        const applyToKey = this.formattingSettings.labelCard.applyTo.value?.value || "all";
+                        let valueOverrides: Record<string, any> = {};
+                        try {
+                            valueOverrides = JSON.parse(this.formattingSettings.labelCard.valueOverrides.value || "{}") || {};
+                        } catch {}
+
                         for (let j = 0; j < displayValues.length; j++) {
                             const valueMeta = displayValues[j].source;
                             const label = valueMeta.displayName || `Value ${j + 1}`;
+                            const valueKey = this.valueKeyByLabel[label] || label;
                             let sum = 0;
                             restCards.forEach(card => {
                                 let v = card.values[j]?.rawValue;
@@ -339,7 +346,25 @@ export class Visual implements IVisual {
                             });
                             // Normalizar NaN, null, undefined
                             if (sum === undefined || sum === null || isNaN(sum)) sum = 0;
-                            const formattedValue = this.formatValue(sum, valueMeta.format);
+                            let formattedValue = this.formatValue(sum, valueMeta.format);
+
+                            // Solo aplicar override a la métrica seleccionada
+                            let override = undefined;
+                            if (applyToKey !== "all" && (applyToKey === valueKey || applyToKey === label)) {
+                                override = valueOverrides[valueKey] || valueOverrides[label];
+                                if (override && override.customFormat && sum !== null && sum !== undefined) {
+                                    if (override.customFormat.includes("%")) {
+                                        const decimals = (override.customFormat.split(".")[1] || "").replace(/[^0-9]/g, "").length;
+                                        formattedValue = (sum * 100).toFixed(decimals) + " %";
+                                    } else {
+                                        try {
+                                            formattedValue = sum.toLocaleString(undefined, { style: 'decimal', minimumFractionDigits: 0, maximumFractionDigits: 20 });
+                                        } catch {
+                                            formattedValue = sum.toString();
+                                        }
+                                    }
+                                }
+                            }
                             restCard.values.push({
                                 label: label,
                                 value: formattedValue,
@@ -831,6 +856,11 @@ export class Visual implements IVisual {
                 }
             }
 
+            // Parse advanced overrides (JSON)
+            let valueOverrides: Record<string, any> = {};
+            try {
+                valueOverrides = JSON.parse(settings.labelCard.valueOverrides.value || "{}") || {};
+            } catch {}
             cardData.values.forEach(valueData => {
                 const valueRow = document.createElement("div");
                 valueRow.className = "valueRow";
@@ -842,42 +872,22 @@ export class Visual implements IVisual {
                 const value = document.createElement("div");
                 value.className = "valueText";
                 value.textContent = valueData.value;
-
-                const valueKey = this.valueKeyByLabel[valueData.label] || valueData.label;
-                const override = (valueKey && this.valueOverrides[valueKey])
-                    || this.valueOverrides[valueData.label]
-                    || this.valueOverrides["all"];
-                if (override) {
-                    if (override.labelFontFamily) label.style.fontFamily = override.labelFontFamily;
-                    if (override.labelFontSize) label.style.fontSize = `${override.labelFontSize}px`;
-                    if (override.labelBold !== undefined) label.style.fontWeight = override.labelBold ? "bold" : "normal";
-                    if (override.labelItalic !== undefined) label.style.fontStyle = override.labelItalic ? "italic" : "normal";
-                    if (override.labelUnderline !== undefined) label.style.textDecoration = override.labelUnderline ? "underline" : "none";
-                    if (override.labelAlign) label.style.textAlign = override.labelAlign;
-
-                    if (override.valueFontFamily) value.style.fontFamily = override.valueFontFamily;
-                    if (override.valueFontSize) value.style.fontSize = `${override.valueFontSize}px`;
-                    if (override.valueBold !== undefined) value.style.fontWeight = override.valueBold ? "bold" : "normal";
-                    if (override.valueItalic !== undefined) value.style.fontStyle = override.valueItalic ? "italic" : "normal";
-                    if (override.valueUnderline !== undefined) value.style.textDecoration = override.valueUnderline ? "underline" : "none";
-                    if (override.valueAlign) value.style.textAlign = override.valueAlign;
-                }
-
-                const childBackgroundEnabled = override?.childBackgroundEnabled ?? settings.labelCard.childBackgroundEnabled.value;
-                const childBackgroundColor = override?.childBackgroundColor ?? settings.labelCard.childBackgroundColor.value.value;
+                // Styles from settings
+                const childBackgroundEnabled = settings.labelCard.childBackgroundEnabled.value;
+                const childBackgroundColor = settings.labelCard.childBackgroundColor.value.value;
                 if (childBackgroundEnabled) {
                     valueRow.style.backgroundColor = childBackgroundColor;
                 }
 
-                const useIndividual = override?.childCornerIndividual ?? settings.labelCard.childCornerIndividual.value;
+                const useIndividual = settings.labelCard.childCornerIndividual.value;
                 if (useIndividual) {
-                    const topLeft = override?.childCornerTopLeft ?? settings.labelCard.childCornerTopLeft.value;
-                    const topRight = override?.childCornerTopRight ?? settings.labelCard.childCornerTopRight.value;
-                    const bottomRight = override?.childCornerBottomRight ?? settings.labelCard.childCornerBottomRight.value;
-                    const bottomLeft = override?.childCornerBottomLeft ?? settings.labelCard.childCornerBottomLeft.value;
+                    const topLeft = settings.labelCard.childCornerTopLeft.value;
+                    const topRight = settings.labelCard.childCornerTopRight.value;
+                    const bottomRight = settings.labelCard.childCornerBottomRight.value;
+                    const bottomLeft = settings.labelCard.childCornerBottomLeft.value;
                     valueRow.style.borderRadius = `${topLeft}px ${topRight}px ${bottomRight}px ${bottomLeft}px`;
                 } else {
-                    const radius = override?.childCornerRadius ?? settings.labelCard.childCornerRadius.value;
+                    const radius = settings.labelCard.childCornerRadius.value;
                     valueRow.style.borderRadius = `${radius}px`;
                 }
 
@@ -905,7 +915,53 @@ export class Visual implements IVisual {
                 const conditionalValueColor = this.getConditionalColorFromObjects(valueObjectsForPointWithColor, "valueColor");
 
                 const hasRuleObjects = Boolean(labelObjectsForPoint || valueObjectsForPointWithColor);
+                // Resolver override por métrica (instanceKind) con fallback global
+                const valueKey = this.valueKeyByLabel[valueData.label] || valueData.label;
+                const valueColumnObjects = valueColumn?.source?.objects;
+                const metricLabelCard = (valueColumnObjects?.labelCard as any) || {};
 
+                const metricOverride: Record<string, any> = {
+                    enableColorRules: metricLabelCard.enableColorRules,
+                    rule1Min: metricLabelCard.rule1Min,
+                    rule1Max: metricLabelCard.rule1Max,
+                    rule1LabelColor: this.extractColorValue(metricLabelCard.rule1LabelColor),
+                    rule1ValueColor: this.extractColorValue(metricLabelCard.rule1ValueColor),
+                    rule1BackgroundColor: this.extractColorValue(metricLabelCard.rule1BackgroundColor),
+                    rule2Min: metricLabelCard.rule2Min,
+                    rule2Max: metricLabelCard.rule2Max,
+                    rule2LabelColor: this.extractColorValue(metricLabelCard.rule2LabelColor),
+                    rule2ValueColor: this.extractColorValue(metricLabelCard.rule2ValueColor),
+                    rule2BackgroundColor: this.extractColorValue(metricLabelCard.rule2BackgroundColor),
+                    rule3Min: metricLabelCard.rule3Min,
+                    rule3Max: metricLabelCard.rule3Max,
+                    rule3LabelColor: this.extractColorValue(metricLabelCard.rule3LabelColor),
+                    rule3ValueColor: this.extractColorValue(metricLabelCard.rule3ValueColor),
+                    rule3BackgroundColor: this.extractColorValue(metricLabelCard.rule3BackgroundColor),
+                    labelColor: this.extractColorValue(metricLabelCard.labelColor),
+                    valueColor: this.extractColorValue(metricLabelCard.valueColor)
+                };
+
+                const jsonOverride = valueOverrides[valueKey] || valueOverrides[valueData.label] || valueOverrides["all"] || {};
+                const override: Record<string, any> = {
+                    enableColorRules: metricOverride.enableColorRules ?? settings.labelCard.enableColorRules.value,
+                    rule1Min: metricOverride.rule1Min ?? settings.labelCard.rule1Min.value,
+                    rule1Max: metricOverride.rule1Max ?? settings.labelCard.rule1Max.value,
+                    rule1LabelColor: metricOverride.rule1LabelColor ?? settings.labelCard.rule1LabelColor.value.value,
+                    rule1ValueColor: metricOverride.rule1ValueColor ?? settings.labelCard.rule1ValueColor.value.value,
+                    rule1BackgroundColor: metricOverride.rule1BackgroundColor ?? settings.labelCard.rule1BackgroundColor.value.value,
+                    rule2Min: metricOverride.rule2Min ?? settings.labelCard.rule2Min.value,
+                    rule2Max: metricOverride.rule2Max ?? settings.labelCard.rule2Max.value,
+                    rule2LabelColor: metricOverride.rule2LabelColor ?? settings.labelCard.rule2LabelColor.value.value,
+                    rule2ValueColor: metricOverride.rule2ValueColor ?? settings.labelCard.rule2ValueColor.value.value,
+                    rule2BackgroundColor: metricOverride.rule2BackgroundColor ?? settings.labelCard.rule2BackgroundColor.value.value,
+                    rule3Min: metricOverride.rule3Min ?? settings.labelCard.rule3Min.value,
+                    rule3Max: metricOverride.rule3Max ?? settings.labelCard.rule3Max.value,
+                    rule3LabelColor: metricOverride.rule3LabelColor ?? settings.labelCard.rule3LabelColor.value.value,
+                    rule3ValueColor: metricOverride.rule3ValueColor ?? settings.labelCard.rule3ValueColor.value.value,
+                    rule3BackgroundColor: metricOverride.rule3BackgroundColor ?? settings.labelCard.rule3BackgroundColor.value.value,
+                    labelColor: metricOverride.labelColor ?? jsonOverride.labelColor,
+                    valueColor: metricOverride.valueColor ?? jsonOverride.valueColor
+                };
                 let rulesApplied = false;
                 if (override?.enableColorRules) {
                     const rule = this.findColorRule(valueData.rawValue, override);
