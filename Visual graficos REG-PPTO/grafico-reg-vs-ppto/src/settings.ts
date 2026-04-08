@@ -984,6 +984,50 @@ class BehaviorCardSettings extends FormattingSettingsCard {
         value: true
     });
 
+    selectionColor = new formattingSettings.ColorPicker({
+        name: "selectionColor",
+        displayName: "Color de resaltado",
+        value: { value: "#2b78ff" },
+        instanceKind: powerbi.VisualEnumerationInstanceKinds.ConstantOrRule,
+        description: "Color usado para la tarjeta seleccionada o destacada."
+    });
+
+    selectionEffectMode = new formattingSettings.ItemDropdown({
+        name: "selectionEffectMode",
+        displayName: "Tipo de resaltado",
+        items: [
+            { value: "internal", displayName: "Interno" },
+            { value: "external", displayName: "Externo" },
+            { value: "both", displayName: "Ambos" }
+        ],
+        value: { value: "both", displayName: "Ambos" }
+    });
+
+    selectionGlowWidth = new formattingSettings.NumUpDown({
+        name: "selectionGlowWidth",
+        displayName: "Grosor del resaltado",
+        value: 2
+    });
+
+    selectionGlowIntensity = new formattingSettings.NumUpDown({
+        name: "selectionGlowIntensity",
+        displayName: "Intensidad del resaltado",
+        value: 20
+    });
+
+    selectionGlowDistance = new formattingSettings.NumUpDown({
+        name: "selectionGlowDistance",
+        displayName: "Distancia del halo",
+        value: 0
+    });
+
+    dimmedOpacity = new formattingSettings.NumUpDown({
+        name: "dimmedOpacity",
+        displayName: "Atenuacion no seleccionadas",
+        value: 35,
+        description: "0 = sin atenuacion, 100 = casi ocultas."
+    });
+
     enableTooltip = new formattingSettings.ToggleSwitch({
         name: "enableTooltip",
         displayName: "Habilitar tooltip",
@@ -1005,7 +1049,18 @@ class BehaviorCardSettings extends FormattingSettingsCard {
 
     name: string = "behaviorCard";
     displayName: string = "Comportamiento";
-    slices: Array<FormattingSettingsSlice> = [this.enableSelection, this.enableTooltip, this.sortByValueIndex, this.sortDescending];
+    slices: Array<FormattingSettingsSlice> = [
+        this.enableSelection,
+        this.selectionColor,
+        this.selectionEffectMode,
+        this.selectionGlowWidth,
+        this.selectionGlowIntensity,
+        this.selectionGlowDistance,
+        this.dimmedOpacity,
+        this.enableTooltip,
+        this.sortByValueIndex,
+        this.sortDescending
+    ];
 }
 
 /**

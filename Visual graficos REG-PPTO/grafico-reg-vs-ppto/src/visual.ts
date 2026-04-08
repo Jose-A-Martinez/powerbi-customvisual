@@ -62,6 +62,7 @@ interface ValueData {
 }
 
 export class Visual implements IVisual {
+    private static readonly DRAG_THRESHOLD_PX = 6;
     private target: HTMLElement;
     private container: HTMLElement;
     private formattingSettings: VisualFormattingSettingsModel;
@@ -637,6 +638,19 @@ export class Visual implements IVisual {
         this.container.style.setProperty('--border-bottom', settings.cardStyle.borderBottom.value ? `${baseBorderWidth}px` : '0px');
         this.container.style.setProperty('--border-left', settings.cardStyle.borderLeft.value ? `${baseBorderWidth}px` : '0px');
         this.container.style.setProperty('--border-radius', `${settings.cardStyle.borderRadius.value}px`);
+        const selectionColor = settings.behaviorCard.selectionColor.value.value;
+        this.container.style.setProperty('--selection-color', selectionColor);
+        const selectionAlpha = Math.max(0, Math.min(100, settings.behaviorCard.selectionGlowIntensity.value || 0)) / 100;
+        const selectionWidth = Math.max(1, settings.behaviorCard.selectionGlowWidth.value || 1);
+        const selectionDistance = Math.max(0, settings.behaviorCard.selectionGlowDistance.value || 0);
+        const dimmedOpacity = 1 - (Math.max(0, Math.min(100, settings.behaviorCard.dimmedOpacity.value || 0)) / 100);
+        this.container.style.setProperty('--selection-shadow-color', this.toRgba(selectionColor, selectionAlpha));
+        this.container.style.setProperty('--selection-width', `${selectionWidth}px`);
+        this.container.style.setProperty('--selection-distance', `${selectionDistance}px`);
+        this.container.style.setProperty('--dimmed-opacity', `${dimmedOpacity}`);
+        this.container.classList.remove('selection-mode-internal', 'selection-mode-external', 'selection-mode-both');
+        const selectionMode = String(settings.behaviorCard.selectionEffectMode.value.value || 'both');
+        this.container.classList.add(`selection-mode-${selectionMode}`);
         const cardBackground = settings.cardStyle.showBackground.value
             ? settings.cardStyle.background.value.value
             : "transparent";
@@ -967,14 +981,7 @@ export class Visual implements IVisual {
             }
 
             if (settings.behaviorCard.enableSelection.value && cardData.selectionId) {
-                cardElement.addEventListener("click", () => {
-                    this.selectionManager
-                        .select(cardData.selectionId as powerbi.visuals.ISelectionId, false)
-                        .then(ids => {
-                            this.selectedIds = ids as powerbi.visuals.ISelectionId[];
-                            this.applySelectionStyles(cardElements, hasHighlights, new Set(this.selectedIds.map(id => id.getKey())));
-                        });
-                });
+                this.attachCardSelectionHandlers(cardElement, cardData.selectionId, cardElements, hasHighlights);
             }
 
             this.container.appendChild(cardElement);
@@ -1003,6 +1010,87 @@ export class Visual implements IVisual {
 
         // Set overflow - siempre auto para mostrar todas las tarjetas
         this.container.style.overflow = 'auto';
+    }
+
+    private attachCardSelectionHandlers(
+        cardElement: HTMLElement,
+        selectionId: powerbi.visuals.ISelectionId,
+        cardElements: Array<{ element: HTMLElement; data: CardData }>,
+        hasHighlights: boolean
+    ): void {
+        let startX = 0;
+        let startY = 0;
+        let pointerActive = false;
+        let isDragGesture = false;
+
+        const handleMove = (event: MouseEvent) => {
+            if (!pointerActive) {
+                return;
+            }
+
+            const deltaX = Math.abs(event.clientX - startX);
+            const deltaY = Math.abs(event.clientY - startY);
+            if (deltaX > Visual.DRAG_THRESHOLD_PX || deltaY > Visual.DRAG_THRESHOLD_PX) {
+                isDragGesture = true;
+            }
+        };
+
+        const cleanup = () => {
+            pointerActive = false;
+            document.removeEventListener("mousemove", handleMove);
+            document.removeEventListener("mouseup", handleUp);
+        };
+
+        const handleUp = (event: MouseEvent) => {
+            const shouldSelect = pointerActive && !isDragGesture && cardElement.contains(event.target as Node);
+            cleanup();
+
+            if (!shouldSelect) {
+                return;
+            }
+
+            this.selectionManager
+                .select(selectionId, false)
+                .then(ids => {
+                    this.selectedIds = ids as powerbi.visuals.ISelectionId[];
+                    this.applySelectionStyles(cardElements, hasHighlights, new Set(this.selectedIds.map(id => id.getKey())));
+                });
+        };
+
+        cardElement.addEventListener("mousedown", (event: MouseEvent) => {
+            if (event.button !== 0) {
+                return;
+            }
+
+            startX = event.clientX;
+            startY = event.clientY;
+            pointerActive = true;
+            isDragGesture = false;
+
+            document.addEventListener("mousemove", handleMove);
+            document.addEventListener("mouseup", handleUp);
+        });
+    }
+
+    private toRgba(color: string, alpha: number): string {
+        const normalized = (color || "").trim();
+        const hex = normalized.startsWith("#") ? normalized.slice(1) : normalized;
+
+        if (/^[0-9a-fA-F]{6}$/.test(hex)) {
+            const red = parseInt(hex.slice(0, 2), 16);
+            const green = parseInt(hex.slice(2, 4), 16);
+            const blue = parseInt(hex.slice(4, 6), 16);
+            return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        }
+
+        if (/^[0-9a-fA-F]{3}$/.test(hex)) {
+            const red = parseInt(hex[0] + hex[0], 16);
+            const green = parseInt(hex[1] + hex[1], 16);
+            const blue = parseInt(hex[2] + hex[2], 16);
+            return `rgba(${red}, ${green}, ${blue}, ${alpha})`;
+        }
+
+        return color;
     }
 
     private fitTitlesToWidth(titleElements: HTMLElement[], maxFontSize: number, minFontSize: number): void {

@@ -424,6 +424,24 @@
                 "enableSelection": {
                     "type": { "bool": true }
                 },
+                "selectionColor": {
+                    "type": { "fill": { "solid": { "color": true } } }
+                },
+                "selectionEffectMode": {
+                    "type": { "text": true }
+                },
+                "selectionGlowWidth": {
+                    "type": { "numeric": true }
+                },
+                "selectionGlowIntensity": {
+                    "type": { "numeric": true }
+                },
+                "selectionGlowDistance": {
+                    "type": { "numeric": true }
+                },
+                "dimmedOpacity": {
+                    "type": { "numeric": true }
+                },
                 "enableTooltip": {
                     "type": { "bool": true }
                 },
